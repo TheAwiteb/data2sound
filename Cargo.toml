@@ -1,7 +1,7 @@
 [package]
 name = "data2sound"
 description = "A library to convert data to sound, and vice versa"
-version = "0.1.0"
+version = "0.1.1"
 rust-version = "1.56.1"
 edition = "2021"
 authors = ["TheAwiteb <awiteb@hotmail.com>"]
@@ -10,7 +10,7 @@ documentation = "https://docs.rs/data2sound"
 license = "MIT"
 readme = "README.md"
 keywords = ["todo", "sdk"]
-categories = ["Audio"]
+categories = ["multimedia::audio"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
