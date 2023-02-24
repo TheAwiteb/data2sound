@@ -1,0 +1,19 @@
+[package]
+name = "data2sound"
+description = "A library to convert data to sound, and vice versa"
+version = "0.1.0"
+rust-version = "1.56.1"
+edition = "2021"
+authors = ["TheAwiteb <awiteb@hotmail.com>"]
+repository = "https://github.com/TheAwiteb/data2sound"
+documentation = "https://docs.rs/data2sound"
+license = "MIT"
+readme = "README.md"
+keywords = ["todo", "sdk"]
+categories = ["Audio"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+file-utils = "= 0.1.5"
+hound = "= 3.5.0"
