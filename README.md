@@ -9,7 +9,6 @@ The minimum supported Rust version is 1.56.1.
 The sound frequency is 202860Hz (202.86kHz), and the sound is mono. The sound is encoded in 16 bits.
 ## Disadvantages
 - The wave file size limit is 4GB, so you can't store more than 4GB of data in a single file.
-- The decoding speed is slow, so it will take a long time to decode a large file. (see benchmarks)
 ## Advantages
 - The sound file is a standard .wav file, so you can play it with any audio player.
 - The sound file will be the same size as the data file.
@@ -50,18 +49,18 @@ You can use this tool to store your data in soundcloud, or any other sound hosti
 ## About soundcloud
 Soundcloud is a service that allows you to upload and share your music. It is a great place to store your music, but it is also a great place to store your data. The data is stored in the sound file, so you can store as much data as you want. The only limit is the size of the sound file which is 4GB.
 
-## benchmarks
+## Benchmarks
 The following benchmarks were made on a 4.600GHz 12th Gen Intel i7-12700H CPU with 16GB of RAM.
 ### Encoding
 | File size | Audio file size | Audio length | Speed | Link |
 |-----------|-----------------|------|-------| ---- |
-| 2687.94MB | 2687.94MB | 01:28:13 | 323.00s | [Soundcloud-link](https://soundcloud.com/awiteb/pop-os-2204-amd64-intel-23iso) |
-| 35.3MB | 35.3MB | 00:01::27 | 4.11s | [Soundcloud-link](https://soundcloud.com/awiteb/rust-1671zip) |
+| 2687.94MB | 2687.94MB | 01:28:13 | 6.27s | [Soundcloud-link](https://soundcloud.com/awiteb/pop-os-2204-amd64-intel-23iso) |
+| 35.3MB | 35.3MB | 00:01::27 | 113.47ms | [Soundcloud-link](https://soundcloud.com/awiteb/rust-1671zip) |
 ## Decoding
 | File size | Audio file size | Audio length | Speed | Link |
 |-----------|-----------------|------|-------| ---- |
-| 2687.94MB | 2687.94MB | 01:28:13 | ~1930.29s | [Soundcloud-link](https://soundcloud.com/awiteb/pop-os-2204-amd64-intel-23iso) |
-| 35.3MB | 35.3MB | 00:01::27 | 25.35s | [Soundcloud-link](https://soundcloud.com/awiteb/rust-1671zip) |
+| 2687.94MB | 2687.94MB | 01:28:13 | 12.76s | [Soundcloud-link](https://soundcloud.com/awiteb/pop-os-2204-amd64-intel-23iso) |
+| 35.3MB | 35.3MB | 00:01::27 | 206.04ms | [Soundcloud-link](https://soundcloud.com/awiteb/rust-1671zip) |
 
 
 ## License
