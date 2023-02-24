@@ -15,6 +15,7 @@ The sound frequency is 202860Hz (202.86kHz), and the sound is mono. The sound is
 
 
 ## Usage
+There are two ways to use this crate. As a library, or as a command line tool. The library is the core of the tool, so you can use the library to create your own tool.
 ### Library
 Add this to your Cargo.toml:
 ```toml
