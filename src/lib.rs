@@ -1,5 +1,9 @@
 use file_utils::{read::Read, write::Write};
-use std::{fs, path};
+use std::{
+    fs,
+    io::{BufReader, BufWriter},
+    path,
+};
 
 /// The sample rate to use when encoding
 pub const SAMPLE_RATE: u32 = 202860;
@@ -17,7 +21,7 @@ pub use hound::Result;
 /// let file = fs::File::open("test.txt").unwrap();
 /// encode(file, "test.wav").unwrap();
 /// ```
-pub fn encode(mut file: fs::File, wav_output: impl AsRef<path::Path>) -> Result<()> {
+pub fn encode(file: fs::File, wav_output: impl AsRef<path::Path>) -> Result<()> {
     let spec = hound::WavSpec {
         channels: 1,
         sample_rate: SAMPLE_RATE,
@@ -31,6 +35,9 @@ pub fn encode(mut file: fs::File, wav_output: impl AsRef<path::Path>) -> Result<
         str_path
     };
     let mut writer = hound::WavWriter::create(wav_output, spec)?;
+
+    let mut file = BufReader::new(file);
+
     while let Ok(byte) = file.read_i16() {
         writer.write_sample(byte)?;
     }
@@ -49,7 +56,7 @@ pub fn encode(mut file: fs::File, wav_output: impl AsRef<path::Path>) -> Result<
 /// ```
 pub fn decode(file: impl AsRef<path::Path>, output: impl AsRef<path::Path>) -> Result<()> {
     let mut reader = hound::WavReader::open(file.as_ref()).unwrap();
-    let mut writer = fs::File::create(output).unwrap();
+    let mut writer = BufWriter::new(fs::File::create(output).unwrap());
     for sample in reader.samples() {
         writer.write_i16(sample?)?;
     }
