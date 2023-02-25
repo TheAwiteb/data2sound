@@ -6,6 +6,7 @@ use std::{
 };
 
 mod errors;
+mod utils;
 pub use errors::*;
 
 /// The sample rate to use when encoding
@@ -23,6 +24,7 @@ pub const SAMPLE_RATE: u32 = 202860;
 /// encode(file, "test.wav").unwrap();
 /// ```
 pub fn encode(file: fs::File, wav_output: impl AsRef<path::Path>) -> Result<()> {
+    utils::check_file_size(&file)?;
     let spec = hound::WavSpec {
         channels: 1,
         sample_rate: SAMPLE_RATE,
@@ -56,7 +58,8 @@ pub fn encode(file: fs::File, wav_output: impl AsRef<path::Path>) -> Result<()> 
 /// decode("test.wav", "test.txt").unwrap();
 /// ```
 pub fn decode(file: impl AsRef<path::Path>, output: impl AsRef<path::Path>) -> Result<()> {
-    let mut reader = hound::WavReader::open(file.as_ref()).unwrap();
+    utils::check_file_size(&fs::File::open(&file)?)?;
+    let mut reader = hound::WavReader::open(file).unwrap();
     let mut writer = BufWriter::new(fs::File::create(output).unwrap());
     for sample in reader.samples() {
         writer.write_i16(sample?)?;
