@@ -9,7 +9,7 @@ repository = "https://github.com/TheAwiteb/data2sound"
 documentation = "https://docs.rs/data2sound"
 license = "MIT"
 readme = "README.md"
-keywords = ["todo", "sdk"]
+keywords = ["Audio", "CLI", "WAV", "Encode", "Decode"]
 categories = ["multimedia::audio"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
