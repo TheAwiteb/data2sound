@@ -5,10 +5,11 @@ use std::{
     path,
 };
 
+mod errors;
+pub use errors::*;
+
 /// The sample rate to use when encoding
 pub const SAMPLE_RATE: u32 = 202860;
-/// The result type for this crate, which is just a re-export of `hound::Result`
-pub use hound::Result;
 
 /// Encode file to wav file by converting the bytes to a sine wave, then writing the sine wave to a wav file
 /// # Arguments
