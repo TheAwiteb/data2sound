@@ -59,8 +59,8 @@ pub fn encode(file: fs::File, wav_output: impl AsRef<path::Path>) -> Result<()> 
 /// ```
 pub fn decode(file: impl AsRef<path::Path>, output: impl AsRef<path::Path>) -> Result<()> {
     utils::check_file_size(&fs::File::open(&file)?)?;
-    let mut reader = hound::WavReader::open(file).unwrap();
-    let mut writer = BufWriter::new(fs::File::create(output).unwrap());
+    let mut reader = hound::WavReader::open(file)?;
+    let mut writer = BufWriter::new(fs::File::create(output)?);
     for sample in reader.samples() {
         writer.write_i16(sample?)?;
     }
