@@ -21,7 +21,7 @@ fn help() {
     println!("{}", HELP_MESSAGE);
 }
 
-fn main() -> data2sound::Result<()> {
+fn try_main() -> data2sound::Result<()> {
     // Skip the first argument, which is the path to the executable
     let args: Vec<String> = env::args().collect();
     if args.iter().any(|arg| arg == "--version" || arg == "-v") {
@@ -34,7 +34,7 @@ fn main() -> data2sound::Result<()> {
         let input = args.next().unwrap();
         let output = args.next().unwrap();
         match command.as_str() {
-            "encode" | "e" => data2sound::encode(fs::File::open(input).unwrap(), output)?,
+            "encode" | "e" => data2sound::encode(fs::File::open(input)?, output)?,
             "decode" | "d" => data2sound::decode(input, output)?,
             _ => eprintln!(
                 "Unknown command '{}' Run 'data2sound --help' for more information",
@@ -43,4 +43,11 @@ fn main() -> data2sound::Result<()> {
         }
     }
     Ok(())
+}
+
+fn main() {
+    if let Err(err) = try_main() {
+        eprintln!("{}", err);
+        std::process::exit(1);
+    }
 }
