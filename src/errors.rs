@@ -12,6 +12,8 @@ pub enum Error {
     Io(std::io::Error),
     /// Larg file size error (maxnimum file size is 4 GB)
     LargeFileSize,
+    /// Invalid wav file error
+    InvalidWavFile(String),
 }
 
 impl From<hound::Error> for Error {
@@ -32,6 +34,7 @@ impl fmt::Display for Error {
             Error::Hound(err) => write!(f, "Hound error: {}", err),
             Error::Io(err) => write!(f, "IO error: {}", err),
             Error::LargeFileSize => write!(f, "File size is too large, maximum file size is 4 GB"),
+            Error::InvalidWavFile(msg) => write!(f, "Invalid wav file, {}", msg),
         }
     }
 }
