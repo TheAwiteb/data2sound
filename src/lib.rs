@@ -60,6 +60,7 @@ pub fn encode(file: fs::File, wav_output: impl AsRef<path::Path>) -> Result<()> 
 pub fn decode(file: impl AsRef<path::Path>, output: impl AsRef<path::Path>) -> Result<()> {
     let output_file = fs::File::open(&file)?;
     utils::check_file_size(&output_file)?;
+    utils::check_wav_file_size(&output_file)?;
     let mut reader = BufReader::new(output_file);
     let mut writer = BufWriter::new(fs::File::create(output)?);
     // Skip the header, to get to the data (the header is 44 bytes long)
