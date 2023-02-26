@@ -56,8 +56,8 @@ The following benchmarks were made on a 4.600GHz 12th Gen Intel i7-12700H CPU wi
 ## Decoding
 | File size | Audio file size | Audio length | Speed | Link |
 |-----------|-----------------|------|-------| ---- |
-| 2687.94MB | 2687.94MB | 01:28:13 | 12.76s | [Soundcloud-link](https://soundcloud.com/awiteb/pop-os-2204-amd64-intel-23iso) |
-| 35.3MB | 35.3MB | 00:01::27 | 206.04ms | [Soundcloud-link](https://soundcloud.com/awiteb/rust-1671zip) |
+| 2687.94MB | 2687.94MB | 01:28:13 | 5.14s | [Soundcloud-link](https://soundcloud.com/awiteb/pop-os-2204-amd64-intel-23iso) |
+| 35.3MB | 35.3MB | 00:01::27 | 117.58ms | [Soundcloud-link](https://soundcloud.com/awiteb/rust-1671zip) |
 
 ## Disclaimer
 This tool was designed for educational purposes as it explains how to save data in an audio file. It is not recommended to exploit this thing to use cloud audio storage services to store your data, as your account may be banned.
