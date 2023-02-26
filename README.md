@@ -1,5 +1,5 @@
 # Data to sound
-A simple crate to convert data to sound, and sound to data. The sound file format is .wav.
+A simple crate to convert data to sound, and sound to data. The sound file format is wave (.wav).
 You can use it as a library or as a command line tool.
 
 ## Minimum supported Rust version
@@ -44,11 +44,7 @@ data2sound decode input_file.wav output_file
 ```
 
 ## Use cases
-### Infinite storage
-You can use this tool to store your data in soundcloud, or any other sound hosting service. The data is stored in the sound file, so you can store as much data as you want. The only limit is the size of the sound file.
-
-## About soundcloud
-Soundcloud is a service that allows you to upload and share your music. It is a great place to store your music, but it is also a great place to store your data. The data is stored in the sound file, so you can store as much data as you want. The only limit is the size of the sound file which is 4GB.
+This crate can be used to store data in a sound file, and to retrieve the data from the sound file. This can be useful for storing data in a sound file.
 
 ## Benchmarks
 The following benchmarks were made on a 4.600GHz 12th Gen Intel i7-12700H CPU with 16GB of RAM.
@@ -63,6 +59,8 @@ The following benchmarks were made on a 4.600GHz 12th Gen Intel i7-12700H CPU wi
 | 2687.94MB | 2687.94MB | 01:28:13 | 12.76s | [Soundcloud-link](https://soundcloud.com/awiteb/pop-os-2204-amd64-intel-23iso) |
 | 35.3MB | 35.3MB | 00:01::27 | 206.04ms | [Soundcloud-link](https://soundcloud.com/awiteb/rust-1671zip) |
 
+## Disclaimer
+This tool was designed for educational purposes as it explains how to save data in an audio file. It is not recommended to exploit this thing to use cloud audio storage services to store your data, as your account may be banned.
 
 ## License
 This project is licensed under the MIT license. See the LICENSE file for more information.
