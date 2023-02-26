@@ -1,7 +1,7 @@
 use file_utils::{read::Read, write::Write};
 use std::{
     fs,
-    io::{BufReader, BufWriter},
+    io::{BufReader, BufWriter, Seek},
     path,
 };
 
@@ -58,11 +58,14 @@ pub fn encode(file: fs::File, wav_output: impl AsRef<path::Path>) -> Result<()> 
 /// decode("test.wav", "test.txt").unwrap();
 /// ```
 pub fn decode(file: impl AsRef<path::Path>, output: impl AsRef<path::Path>) -> Result<()> {
-    utils::check_file_size(&fs::File::open(&file)?)?;
-    let mut reader = hound::WavReader::open(file)?;
+    let output_file = fs::File::open(&file)?;
+    utils::check_file_size(&output_file)?;
+    let mut reader = BufReader::new(output_file);
     let mut writer = BufWriter::new(fs::File::create(output)?);
-    for sample in reader.samples() {
-        writer.write_i16(sample?)?;
+    // Skip the header, to get to the data (the header is 44 bytes long)
+    reader.seek(std::io::SeekFrom::Start(44))?;
+    while let Ok(bytes) = reader.read_i16() {
+        writer.write_i16(bytes)?;
     }
     Ok(())
 }
