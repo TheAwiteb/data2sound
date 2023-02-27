@@ -22,14 +22,15 @@ fn help() {
 }
 
 fn try_main() -> data2sound::Result<()> {
-    // Skip the first argument, which is the path to the executable
     let args: Vec<String> = env::args().collect();
     if args.iter().any(|arg| arg == "--version" || arg == "-v") {
         version()
     } else if args.iter().any(|arg| arg == "--help" || arg == "-h") || args.len() < 4 {
         help()
     } else {
+        // Skip the first argument, which is the path to the executable
         let mut args = args.iter().skip(1);
+        // The `unwrap` is safe because we already checked that there are at least 4 arguments
         let command = args.next().unwrap();
         let input = args.next().unwrap();
         let output = args.next().unwrap();
