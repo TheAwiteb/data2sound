@@ -20,7 +20,7 @@ There are two ways to use this crate. As a library, or as a command line tool. T
 Add this to your Cargo.toml:
 ```toml
 [dependencies]
-data2sound = "0.1.0"
+data2sound = "0.2.0"
 ```
 See the documentation for more information about the library.
 
