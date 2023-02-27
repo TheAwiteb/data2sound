@@ -1,7 +1,7 @@
-use file_utils::{read::Read, write::Write};
+use file_utils::read::Read;
 use std::{
     fs,
-    io::{BufReader, BufWriter, Seek},
+    io::{self, BufReader, BufWriter, Seek},
     path,
 };
 
@@ -65,9 +65,8 @@ pub fn decode(file: impl AsRef<path::Path>, output: impl AsRef<path::Path>) -> R
     let mut writer = BufWriter::new(fs::File::create(output)?);
     // Skip the header, to get to the data (the header is 44 bytes long)
     reader.seek(std::io::SeekFrom::Start(44))?;
-    while let Ok(bytes) = reader.read_i16() {
-        writer.write_i16(bytes)?;
-    }
+    // Copy the wave file after skipping the header to the output file
+    io::copy(&mut reader, &mut writer)?;
     Ok(())
 }
 
