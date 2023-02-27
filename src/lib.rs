@@ -1,7 +1,6 @@
-use file_utils::read::Read;
 use std::{
     fs,
-    io::{self, BufReader, BufWriter, Seek},
+    io::{self, BufReader, BufWriter, Seek, Write},
     path,
 };
 
@@ -19,31 +18,23 @@ pub const SAMPLE_RATE: u32 = 202860;
 /// # Example
 /// ```rust|no_run
 /// use data2sound::encode;
-/// use std::fs;
-/// let file = fs::File::open("test.txt").unwrap();
-/// encode(file, "test.wav").unwrap();
+/// encode("test.txt", "test.wav").unwrap();
 /// ```
-pub fn encode(file: fs::File, wav_output: impl AsRef<path::Path>) -> Result<()> {
+pub fn encode(file: impl AsRef<path::Path>, wav_output: impl AsRef<path::Path>) -> Result<()> {
+    let file = fs::File::open(file)?;
     utils::check_file_size(&file)?;
-    let spec = hound::WavSpec {
-        channels: 1,
-        sample_rate: SAMPLE_RATE,
-        bits_per_sample: 16,
-        sample_format: hound::SampleFormat::Int,
-    };
     let str_path = wav_output.as_ref().display().to_string();
     let wav_output = if !str_path.ends_with(".wav") {
         format!("{}.wav", wav_output.as_ref().display())
     } else {
         str_path
     };
-    let mut writer = hound::WavWriter::create(wav_output, spec)?;
-
-    let mut file = BufReader::new(file);
-
-    while let Ok(byte) = file.read_i16() {
-        writer.write_sample(byte)?;
-    }
+    let mut reader = BufReader::new(&file);
+    let mut writer = BufWriter::new(fs::File::create(wav_output)?);
+    // Write the wav header to the wav file
+    writer.write_all(&utils::create_wav_header(file.metadata()?.len() as u32))?;
+    // Copy the file to the wav file
+    io::copy(&mut reader, &mut writer)?;
     Ok(())
 }
 
@@ -78,7 +69,7 @@ mod tests {
     #[test]
     fn test_encode_decode() {
         fs::write("test.txt", "Some context").unwrap();
-        encode(fs::File::open("test.txt").unwrap(), "test.wav").unwrap();
+        encode("test.txt", "test.wav").unwrap();
         decode("test.wav", "test2.txt").unwrap();
         let file = fs::File::open("test.txt").unwrap();
         let file2 = fs::File::open("test2.txt").unwrap();

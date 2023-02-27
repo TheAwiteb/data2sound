@@ -1,6 +1,6 @@
 [package]
 name = "data2sound"
-description = "A library to convert data to sound, and vice versa"
+description = "A library to convert data to sound, and vice versa (dependency-free)"
 version = "0.1.6"
 rust-version = "1.56.1"
 edition = "2021"
@@ -15,8 +15,6 @@ categories = ["multimedia::audio"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-file-utils = "= 0.1.5"
-hound = "= 3.5.0"
 
 
 [profile.release]
