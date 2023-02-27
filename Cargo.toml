@@ -17,3 +17,12 @@ categories = ["multimedia::audio"]
 [dependencies]
 file-utils = "= 0.1.5"
 hound = "= 3.5.0"
+
+
+[profile.release]
+opt-level = 's' # I don't know what this does, but it's make the binary smaller and faster, so I'll keep it.
+lto = true # Link-time optimization.
+debug = false # Disable debug info.
+codegen-units = 1 # Use a single codegen unit.
+panic = "abort" # Use abort instead of unwind.
+strip = true # Strip symbols.
