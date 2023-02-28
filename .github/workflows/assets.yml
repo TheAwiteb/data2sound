@@ -1,0 +1,35 @@
+name: Assets
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  asset:
+    name: ${{ matrix.target }} asset
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-pc-windows-gnu
+            archive: zip
+          - target: x86_64-unknown-linux-musl
+            archive: tar.gz tar.xz tar.zst
+          - target: x86_64-apple-darwin
+            archive: zip
+          - target: wasm32-wasi
+            archive: zip tar.gz tar.xz tar.zst
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create asset
+        uses: rust-build/rust-build.action@v1.3.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+          EXTRA_FILES: ./README.md ./LICENSE
+          MINIFY: true
+        with:
+          TOOLCHAIN_VERSION: stable
+          RUSTTARGET: ${{ matrix.target }}
+          ARCHIVE_TYPES: ${{ matrix.archive }}
