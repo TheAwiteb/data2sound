@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 use std::{
     fs,
     io::{self, BufReader, BufWriter, Seek, Write},
@@ -59,6 +61,46 @@ pub fn decode(file: impl AsRef<path::Path>, output: impl AsRef<path::Path>) -> R
     // Copy the wave file after skipping the header to the output file
     io::copy(&mut reader, &mut writer)?;
     Ok(())
+}
+
+/// Encode the given bytes to a wav bytes vector
+/// # Arguments
+/// * `bytes` - The bytes to encode
+/// # Example
+/// ```rust
+/// use data2sound::encode_bytes;
+/// let bytes = vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+/// let wav_bytes = encode_bytes(&bytes).unwrap();
+/// assert_eq!(wav_bytes.len(), 44 + bytes.len());
+/// assert_eq!(wav_bytes[44..], bytes[..]);
+/// ```
+pub fn encode_bytes(bytes: &[u8]) -> Result<Vec<u8>> {
+    if bytes.len() > 4294967295 {
+        return Err(Error::LargeFileSize);
+    }
+    let mut wav_bytes = utils::create_wav_header(bytes.len() as u32).to_vec();
+    wav_bytes.extend_from_slice(bytes);
+    Ok(wav_bytes)
+}
+
+/// Decode the given wav bytes to bytes
+/// # Arguments
+/// * `bytes` - The wav bytes to decode
+/// # Example
+/// ```rust
+/// use data2sound::decode_bytes;
+/// let bytes = vec![82, 73, 70, 70, 46, 0, 0, 0, 87, 65, 86, 69, 102, 109, 116, 32, 16, 0, 0, 0, 1, 0, 1, 0, 108, 24, 3, 0, 216, 48, 6, 0, 2, 0, 16, 0, 100, 97, 116, 97, 10, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+/// let decoded_bytes = decode_bytes(&bytes).unwrap();
+/// assert_eq!(decoded_bytes.len(), 10);
+/// assert_eq!(decoded_bytes, vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+/// ```
+pub fn decode_bytes(bytes: &[u8]) -> Result<Vec<u8>> {
+    if bytes.len() < 44 {
+        return Err(Error::InvalidWavFile(
+            "the minimum wav file size is 44 bytes".to_string(),
+        ));
+    }
+    Ok(bytes[44..].to_vec())
 }
 
 #[cfg(test)]
