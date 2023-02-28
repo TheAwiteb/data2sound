@@ -4,8 +4,7 @@ Commands:
     decode,     d  Decode a wav file to a file
 Options:
     --help,    -h  Print this help message
-    --version, -v  Print the version
-"#;
+    --version, -V  Print the version"#;
 
 fn version() {
     println!(
