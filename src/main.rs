@@ -20,7 +20,7 @@ fn help() {
 
 fn try_main() -> data2sound::Result<()> {
     let args: Vec<String> = std::env::args().collect();
-    if args.iter().any(|arg| arg == "--version" || arg == "-v") {
+    if args.iter().any(|arg| arg == "--version" || arg == "-V") {
         version()
     } else if args.iter().any(|arg| arg == "--help" || arg == "-h") || args.len() < 4 {
         help()
